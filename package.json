@@ -18,7 +18,7 @@
     "commands": [
       {
         "command": "translation-extractor.search",
-        "category": "Translation",
+        "category": "Translation Extractor",
         "title": "Extract Traslations"
       }
     ]

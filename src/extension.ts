@@ -8,28 +8,45 @@ export function activate(context: vscode.ExtensionContext) {
       "translation-extractor.search",
       async () => {
         try {
-          const dir = "/Users/mac/Desktop/cleverzone/docta-dash-frontend/src";
-          const results = await findInFiles.find(`\\bt\\('.*?'`, dir);
-          console.log("done");
+          const options: vscode.OpenDialogOptions = {
+            canSelectMany: false,
+            openLabel: "Select",
+            canSelectFiles: false,
+            canSelectFolders: true,
+            defaultUri:
+              vscode.workspace.workspaceFolders &&
+              vscode.workspace.workspaceFolders[0].uri,
+          };
 
-          const output: any = {};
+          const fileUri = await vscode.window.showOpenDialog(options);
 
-          for (let result in results) {
-            results[result].matches.map((match: string) => {
-              const translation = match.replace(`t('`, "").replace(`'`, "");
-              output[translation] = "";
-            });
-          }
+          if (fileUri && fileUri[0]) {
+            const dir = fileUri[0].fsPath;
+            const results = await findInFiles.find(
+              `\\bt\\('.*?'`,
+              dir,
+              ".*\\.(js|jsx|ts|tsx)$"
+            );
 
-          fs.writeFile(
-            "/Users/mac/Desktop/test.txt",
-            JSON.stringify(output),
-            function (err) {
-              if (err) {
-                console.log(err);
-              }
+            const output: any = {};
+
+            for (let result in results) {
+              results[result].matches.map((match: string) => {
+                const translation = match.replace(`t('`, "").replace(`'`, "");
+                output[translation] = "";
+              });
             }
-          );
+
+            fs.writeFile(
+              `${dir}/translation.json`,
+              JSON.stringify(output),
+              function (err) {
+                if (err) {
+                  console.log(err);
+                }
+              }
+            );
+          }
         } catch (err) {
           console.log(err);
         }
