@@ -4,9 +4,9 @@ Translation Extractor is an extension that extracts any translations from the co
 
 ## Usage
 
-1- open the command Pallete: and search for `Translation Extractor` and Press Enter
-2- choose the src file that the extension should extract translations from
-3- the translation will be generated in a file called `translation.json` on the same folder
+1. open the command Pallete: and search for `Translation Extractor` and Press Enter
+2. choose the src file that the extension should extract translations from
+3. the translation will be generated in a file called `translation.json` on the same folder
 
 ## Features
 
