@@ -2,6 +2,7 @@
   "name": "translation-extractor",
   "displayName": "translation-extractor",
   "description": "Extract Translations from your code Easily",
+  "icon": "images/logo.png",
   "version": "0.0.2",
   "engines": {
     "vscode": "^1.54.0"
