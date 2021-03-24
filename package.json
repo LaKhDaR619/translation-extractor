@@ -1,23 +1,41 @@
 {
   "name": "translation-extractor",
   "displayName": "translation-extractor",
-  "description": "",
+  "description": "Extract Translations from your code Easily",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.54.0"
   },
+  "publisher": "Lakhdar",
+  "author": {
+    "name": "Lakhdar Ben boudina",
+    "email": "lakhdar.boudina@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/LaKhDaR619/translation-extractor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LaKhDaR619/translation-extractor"
+  },
+  "bugs": {
+    "url": "https://github.com/LaKhDaR619/translation-extractor/issues"
+  },
+  "keywords": [
+    "Translation",
+    "Language",
+    "i18n"
+  ],
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onCommand:translation-extractor.search",
-    "onCommand:translation-extractor.select"
+    "onCommand:translation-extractor.extract"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "translation-extractor.search",
+        "command": "translation-extractor.extract",
         "category": "Translation Extractor",
         "title": "Extract Traslations"
       }

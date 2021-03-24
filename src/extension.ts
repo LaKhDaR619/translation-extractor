@@ -5,7 +5,7 @@ import * as fs from "fs";
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "translation-extractor.search",
+      "translation-extractor.extract",
       async () => {
         try {
           const options: vscode.OpenDialogOptions = {
