@@ -27,3 +27,7 @@ Initial release of Translation Extraction
 ### 0.0.2
 
 changed extraction command from `translation-extractor.search` to `translation-extractor.extract`
+
+### 0.0.3
+
+added extraction for all kinds of simple strings ', ", `
