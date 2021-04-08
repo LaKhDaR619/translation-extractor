@@ -22,17 +22,40 @@ export function activate(context: vscode.ExtensionContext) {
 
           if (fileUri && fileUri[0]) {
             const dir = fileUri[0].fsPath;
-            const results = await findInFiles.find(
-              `\\bt\\('.*?'`,
-              dir,
-              ".*\\.(js|jsx|ts|tsx)$"
-            );
+
+            const results = {
+              // matches with '
+              ...(await findInFiles.find(
+                `\\bt\\('.*?'`,
+                dir,
+                ".*\\.(js|jsx|ts|tsx)$"
+              )),
+              // matches with "
+              ...(await findInFiles.find(
+                `\\bt\\(".*?"`,
+                dir,
+                ".*\\.(js|jsx|ts|tsx)$"
+              )),
+              // matches with `
+              ...(await findInFiles.find(
+                "\\bt\\(`.*?`",
+                dir,
+                ".*\\.(js|jsx|ts|tsx)$"
+              )),
+            };
 
             const output: any = {};
 
             for (let result in results) {
               results[result].matches.map((match: string) => {
-                const translation = match.replace(`t('`, "").replace(`'`, "");
+                const translation = match
+                  .replace(`t('`, "")
+                  .replace(`'`, "")
+                  .replace(`t("`, "")
+                  .replace(`"`, "")
+                  .replace("t(`", "")
+                  .replace("`", "");
+
                 output[translation] = "";
               });
             }
