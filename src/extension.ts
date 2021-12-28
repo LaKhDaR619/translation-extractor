@@ -1,12 +1,15 @@
 import * as vscode from "vscode";
 var findInFiles = require("find-in-files");
 import * as fs from "fs";
+import { chooseFunctionName } from "./helpers";
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "translation-extractor.extract",
       async () => {
+        const functionName = await chooseFunctionName();
+
         try {
           const options: vscode.OpenDialogOptions = {
             canSelectMany: false,
@@ -17,7 +20,6 @@ export function activate(context: vscode.ExtensionContext) {
               vscode.workspace.workspaceFolders &&
               vscode.workspace.workspaceFolders[0].uri,
           };
-
           const fileUri = await vscode.window.showOpenDialog(options);
 
           if (fileUri && fileUri[0]) {
@@ -26,19 +28,19 @@ export function activate(context: vscode.ExtensionContext) {
             const results = {
               // matches with '
               ...(await findInFiles.find(
-                `\\bt\\('.*?'`,
+                `\\b${functionName}\\('.*?'`,
                 dir,
                 ".*\\.(js|jsx|ts|tsx)$"
               )),
               // matches with "
               ...(await findInFiles.find(
-                `\\bt\\(".*?"`,
+                `\\b${functionName}\\(".*?"`,
                 dir,
                 ".*\\.(js|jsx|ts|tsx)$"
               )),
               // matches with `
               ...(await findInFiles.find(
-                "\\bt\\(`.*?`",
+                `\\b${functionName}\\(\`.*?\``,
                 dir,
                 ".*\\.(js|jsx|ts|tsx)$"
               )),
@@ -49,11 +51,11 @@ export function activate(context: vscode.ExtensionContext) {
             for (let result in results) {
               results[result].matches.map((match: string) => {
                 const translation = match
-                  .replace(`t('`, "")
+                  .replace(`${functionName}('`, "")
                   .replace(`'`, "")
-                  .replace(`t("`, "")
+                  .replace(`${functionName}("`, "")
                   .replace(`"`, "")
-                  .replace("t(`", "")
+                  .replace(`${functionName}(\``, "")
                   .replace("`", "");
 
                 output[translation] = "";

@@ -31,3 +31,7 @@ changed extraction command from `translation-extractor.search` to `translation-e
 ### 0.0.3
 
 added extraction for all kinds of simple strings ', ", `
+
+### 0.0.4
+
+added the ability to choose the translation function name
